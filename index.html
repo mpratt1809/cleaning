@@ -212,44 +212,44 @@ function isRecyclingWeek(ds){const d=new Date(ds+"T12:00:00");return Math.round(
 const SEED_TASKS=[
   {id:"t001",room:"primary-bed",name:"Dust all surfaces & furniture",freq:"weekly",day:"wednesday",assign:"Both",note:"Use microfiber cloths"},
   {id:"t002",room:"primary-bed",name:"Change bed sheets & pillowcases",freq:"weekly",day:"wednesday",assign:"Both",note:"Wash in hot water"},
-  {id:"t003",room:"primary-bed",name:"Vacuum carpet",freq:"weekly",day:"wednesday",assign:"Both",note:""},
+  {id:"t003",room:"primary-bed",name:"Vacuum",freq:"weekly",day:"wednesday",assign:"Both",note:"Carpet"},
   {id:"t010",room:"primary-bath",name:"Wipe mirrors",freq:"weekly",day:"monday",assign:"Both",note:""},
   {id:"t011",room:"primary-bath",name:"Clean counters & sink",freq:"weekly",day:"monday",assign:"Both",note:"Microfiber + all-purpose cleaner"},
   {id:"t012",room:"primary-bath",name:"Deep clean toilet (inside & out)",freq:"weekly",day:"monday",assign:"Both",note:""},
   {id:"t013",room:"primary-bath",name:"Deep clean shower & tub",freq:"weekly",day:"monday",assign:"Both",note:"Scrub tiles, glass, fixtures"},
-  {id:"t014",room:"primary-bath",name:"Vacuum bathroom floor",freq:"weekly",day:"monday",assign:"Both",note:""},
+  {id:"t014",room:"primary-bath",name:"Vacuum",freq:"weekly",day:"monday",assign:"Both",note:"Bathroom floor"},
   {id:"t020",room:"guest-bed",name:"Dust surfaces & vacuum",freq:"monthly",day:"monday",assign:"Both",note:"Light clean — low use",monthWeek:3},
   {id:"t021",room:"guest-bed",name:"Change sheets (if used)",freq:"monthly",day:"monday",assign:"Both",note:"",monthWeek:3},
   {id:"t025",room:"guest-bath",name:"Full bathroom clean",freq:"monthly",day:"monday",assign:"Both",note:"Mirror, counter, toilet, floor — low use",monthWeek:3},
   {id:"t030",room:"office",name:"Scoop litter box",freq:"daily",day:"all",assign:"Meagan",note:"Daily or every other day"},
-  {id:"t031",room:"office",name:"Vacuum floor",freq:"eod",day:"all",assign:"Both",note:"Cat hair + litter tracking"},
+  {id:"t031",room:"office",name:"Vacuum",freq:"eod",day:"all",assign:"Both",note:"Cat hair + litter tracking"},
   {id:"t032",room:"office",name:"Dust desk & surfaces",freq:"weekly",day:"thursday",assign:"Both",note:"Microfiber cloths"},
   {id:"t033",room:"office",name:"Deep clean litter area",freq:"monthly",day:"monday",assign:"Both",note:"Replace litter, wipe area",monthWeek:2},
   {id:"t040",room:"downstairs-bath",name:"Wipe mirrors",freq:"weekly",day:"monday",assign:"Both",note:""},
   {id:"t041",room:"downstairs-bath",name:"Clean counters & sink",freq:"weekly",day:"monday",assign:"Both",note:"Microfiber + cleaner"},
   {id:"t042",room:"downstairs-bath",name:"Deep clean toilet (inside & out)",freq:"weekly",day:"monday",assign:"Both",note:""},
   {id:"t043",room:"downstairs-bath",name:"Wipe down shower/tub",freq:"weekly",day:"monday",assign:"Both",note:"Quick wipe — less use"},
-  {id:"t044",room:"downstairs-bath",name:"Vacuum bathroom floor",freq:"weekly",day:"monday",assign:"Both",note:""},
-  {id:"t050",room:"studio",name:"Vacuum studio floor",freq:"weekly",day:"saturday",assign:"Both",note:"Dog hair buildup"},
-  {id:"t051",room:"studio",name:"Mop studio floor",freq:"weekly",day:"saturday",assign:"Both",note:"Dr. Bronner's + hot water"},
+  {id:"t044",room:"downstairs-bath",name:"Vacuum",freq:"weekly",day:"monday",assign:"Both",note:"Bathroom floor"},
+  {id:"t050",room:"studio",name:"Vacuum",freq:"weekly",day:"saturday",assign:"Both",note:"Dog hair buildup"},
+  {id:"t051",room:"studio",name:"Mop floors",freq:"weekly",day:"saturday",assign:"Both",note:"Dr. Bronner's + hot water"},
   {id:"t052",room:"studio",name:"Laundromat deep clean",freq:"monthly",day:"saturday",assign:"Both",note:"Dog beds, rugs, studio textiles",monthWeek:1},
   {id:"t060",room:"kitchen",name:"Wipe counters & stove top",freq:"daily",day:"all",assign:"Both",note:"After cooking"},
-  {id:"t061",room:"kitchen",name:"Vacuum kitchen floor",freq:"eod",day:"all",assign:"Both",note:"Hardwood — every other day"},
-  {id:"t062",room:"kitchen",name:"Mop kitchen floor",freq:"weekly",day:"friday",assign:"Both",note:"Dr. Bronner's + hot water + mop"},
+  {id:"t061",room:"kitchen",name:"Vacuum",freq:"eod",day:"all",assign:"Both",note:"Hardwood floors"},
+  {id:"t062",room:"kitchen",name:"Mop floors",freq:"weekly",day:"friday",assign:"Both",note:"Dr. Bronner's + hot water + mop"},
   {id:"t063",room:"kitchen",name:"Deep clean microwave",freq:"monthly",day:"monday",assign:"Both",note:"Steam clean inside",monthWeek:1},
   {id:"t064",room:"kitchen",name:"Deep clean stove top & oven",freq:"monthly",day:"monday",assign:"Both",note:"Degrease and scrub",monthWeek:2},
   {id:"t065",room:"kitchen",name:"Clean out fridge",freq:"monthly",day:"monday",assign:"Both",note:"Toss expired, wipe shelves",monthWeek:3},
   {id:"t066",room:"kitchen",name:"Organize pantry",freq:"monthly",day:"monday",assign:"Both",note:"Check dates, reorganize",monthWeek:4},
-  {id:"t070",room:"living",name:"Vacuum living room floor",freq:"eod",day:"all",assign:"Both",note:"Hardwood — every other day"},
+  {id:"t070",room:"living",name:"Vacuum",freq:"eod",day:"all",assign:"Both",note:"Hardwood floors"},
   {id:"t071",room:"living",name:"Dust surfaces & shelves",freq:"weekly",day:"tuesday",assign:"Both",note:"Swiffer + microfiber"},
-  {id:"t072",room:"living",name:"Mop living room floor",freq:"weekly",day:"friday",assign:"Both",note:"Dr. Bronner's + hot water"},
+  {id:"t072",room:"living",name:"Mop floors",freq:"weekly",day:"friday",assign:"Both",note:"Dr. Bronner's + hot water"},
   {id:"t073",room:"living",name:"Vacuum couch & cushions",freq:"biweekly",day:"tuesday",assign:"Both",note:""},
   {id:"t080",room:"laundry",name:"Wash towels",freq:"weekly",day:"thursday",assign:"Both",note:"Hot water cycle"},
   {id:"t081",room:"laundry",name:"Wash dog blankets",freq:"weekly",day:"thursday",assign:"Both",note:"Regular wash — separate from studio"},
   {id:"t082",room:"laundry",name:"Deep clean washing machine",freq:"monthly",day:"monday",assign:"Both",note:"Empty hot cycle + vinegar",monthWeek:1},
   {id:"t083",room:"laundry",name:"Deep clean dryer (lint + vent)",freq:"monthly",day:"monday",assign:"Both",note:"Check vent for buildup",monthWeek:2},
   {id:"t084",room:"laundry",name:"Deep clean dishwasher",freq:"monthly",day:"monday",assign:"Both",note:"Vinegar + baking soda cycle",monthWeek:3},
-  {id:"t090",room:"hallways",name:"Vacuum stairs & upstairs carpet",freq:"eod",day:"all",assign:"Both",note:"Every other day"},
+  {id:"t090",room:"hallways",name:"Vacuum",freq:"eod",day:"all",assign:"Both",note:"Stairs & upstairs carpet"},
   {id:"t091",room:"hallways",name:"Swiffer dust hallway surfaces",freq:"weekly",day:"tuesday",assign:"Both",note:"Swiffer duster"},
   {id:"t100",room:"garage",name:"Sweep entryway",freq:"weekly",day:"saturday",assign:"Both",note:""},
   {id:"t101",room:"garage",name:"Quarterly deep clean & organize",freq:"quarterly",day:"saturday",assign:"Both",note:"Full reorganization + sweep"},
@@ -286,8 +286,22 @@ function getTasksForDate(ds){return allTasks.filter(t=>isTaskDueOnDate(t,ds))}
 function isTaskDone(id,ds){return!!completions[ds]?.[id]}
 function toast(m){toastMsg=m;render();clearTimeout(toastTimer);toastTimer=setTimeout(()=>{toastMsg=null;render()},2500)}
 
+const SEED_VERSION = 2; // Increment to re-seed tasks
+
 function initFirebase(){
-  db.ref("cleaning/tasks").on("value",snap=>{const v=snap.val();if(!v){const o={};SEED_TASKS.forEach(t=>{o[t.id]=t});db.ref("cleaning/tasks").set(o)}else{allTasks=Object.values(v)}synced=true;render()});
+  // Check if we need to re-seed
+  db.ref("cleaning/seedVersion").once("value", snap => {
+    const v = snap.val();
+    if (!v || v < SEED_VERSION) {
+      // Re-seed tasks with updated names
+      const obj = {};
+      SEED_TASKS.forEach(t => { obj[t.id] = t; });
+      db.ref("cleaning/tasks").set(obj);
+      db.ref("cleaning/seedVersion").set(SEED_VERSION);
+    }
+  });
+
+  db.ref("cleaning/tasks").on("value",snap=>{const v=snap.val();if(v){allTasks=Object.values(v)}synced=true;render()});
   db.ref("cleaning/completions").on("value",snap=>{completions=snap.val()||{};render()});
 }
 function toggleTask(id,ds){const p=`cleaning/completions/${ds}/${id}`;if(isTaskDone(id,ds))db.ref(p).remove();else db.ref(p).set(true)}
@@ -298,7 +312,8 @@ function deleteTask(id){db.ref(`cleaning/tasks/${id}`).remove();toast("Task remo
 function groupTasks(tasks,ds){
   const groups={};
   tasks.forEach(t=>{
-    const key=t.name.toLowerCase().replace(/[^a-z0-9]/g,"");
+    // Group by name + frequency so same-name tasks at different frequencies stay separate
+    const key=t.name.toLowerCase().replace(/[^a-z0-9]/g,"")+"|"+t.freq;
     if(!groups[key])groups[key]={name:t.name,tasks:[],freq:t.freq,assign:t.assign,note:t.note};
     groups[key].tasks.push(t);
   });
@@ -375,7 +390,7 @@ function renderDay(tasks,done,pct,dayName){
   if(!tasks.length)return`${trashHtml}<div class="empty-state"><div class="icon">✅</div><h3>Light day!</h3><p>No scheduled tasks.</p></div>`;
 
   const groupsHtml=groups.map(g=>{
-    const gKey=g.name.toLowerCase().replace(/[^a-z0-9]/g,"");
+    const gKey=g.name.toLowerCase().replace(/[^a-z0-9]/g,"")+"|"+g.freq;
     const isExpanded=expandedGroups[gKey];
     const isSingle=g.total===1;
     const checkClass=g.allDone?"done":g.someDone?"partial":"";
