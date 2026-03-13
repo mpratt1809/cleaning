@@ -76,7 +76,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--purple)!
 .progress-bar-fill{height:100%;border-radius:99px;background:var(--purple);transition:width 0.5s ease}
 .progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim);margin-top:6px}
 
-/* Task groups (collapsed similar tasks) */
+/* Task groups */
 .task-group{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;animation:fadeIn 0.3s ease both}
 .task-group-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;transition:background 0.15s}
 .task-group-header:hover{background:rgba(255,255,255,0.02)}
@@ -90,7 +90,6 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--purple)!
 .task-group-meta{display:flex;gap:8px;align-items:center;margin-top:4px;flex-wrap:wrap}
 .task-group-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .task-group-count{font-size:11px;color:var(--text-dim);font-weight:600}
-.task-group-streak{font-size:10px;color:var(--orange);font-weight:700}
 .freq-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:6px}
 .freq-daily{background:rgba(251,146,60,0.12);color:#fb923c}
 .freq-eod{background:rgba(96,165,250,0.12);color:#60a5fa}
@@ -218,44 +217,29 @@ const RECYCLING_ANCHOR=new Date("2026-03-09T12:00:00");
 function isRecyclingWeek(ds){const d=new Date(ds+"T12:00:00");return Math.round((d-RECYCLING_ANCHOR)/(7*86400000))%2===0;}
 
 const SEED_TASKS=[
-  // ── PRIMARY BEDROOM (Wednesday — midweek reset) ──
   {id:"t001",room:"primary-bed",name:"Dust all surfaces & furniture",freq:"weekly",day:"wednesday",assign:"Both",note:"Use microfiber cloths"},
   {id:"t002",room:"primary-bed",name:"Change bed sheets & pillowcases",freq:"weekly",day:"wednesday",assign:"Both",note:"Wash in hot water"},
   {id:"t003",room:"primary-bed",name:"Vacuum",freq:"weekly",day:"wednesday",assign:"Both",note:"Carpet"},
-
-  // ── PRIMARY BATHROOM (Monday — deep clean day) ──
   {id:"t010",room:"primary-bath",name:"Wipe mirrors",freq:"weekly",day:"monday",assign:"Both",note:""},
   {id:"t011",room:"primary-bath",name:"Clean counters & sink",freq:"weekly",day:"monday",assign:"Both",note:"Microfiber + all-purpose cleaner"},
   {id:"t012",room:"primary-bath",name:"Deep clean toilet (inside & out)",freq:"weekly",day:"monday",assign:"Both",note:""},
   {id:"t013",room:"primary-bath",name:"Deep clean shower & tub",freq:"weekly",day:"monday",assign:"Both",note:"Scrub tiles, glass, fixtures"},
   {id:"t014",room:"primary-bath",name:"Vacuum",freq:"weekly",day:"monday",assign:"Both",note:"Bathroom floor"},
-
-  // ── GUEST BEDROOM (monthly — Wednesday, week 3) ──
   {id:"t020",room:"guest-bed",name:"Dust surfaces & vacuum",freq:"monthly",day:"wednesday",assign:"Both",note:"Light clean — low use",monthWeek:3},
   {id:"t021",room:"guest-bed",name:"Change sheets (if used)",freq:"monthly",day:"wednesday",assign:"Both",note:"",monthWeek:3},
-
-  // ── GUEST BATHROOM (monthly — Wednesday, week 3) ──
   {id:"t025",room:"guest-bath",name:"Full bathroom clean",freq:"monthly",day:"wednesday",assign:"Both",note:"Mirror, counter, toilet, floor — low use",monthWeek:3},
-
-  // ── OFFICE / CAT ROOM (Thursday — office & downstairs focus) ──
   {id:"t030",room:"office",name:"Scoop litter box",freq:"daily",day:"all",assign:"Meagan",note:"Daily or every other day"},
   {id:"t031",room:"office",name:"Vacuum",freq:"eod",day:"all",assign:"Both",note:"Cat hair + litter tracking"},
   {id:"t032",room:"office",name:"Dust desk & surfaces",freq:"weekly",day:"thursday",assign:"Both",note:"Microfiber cloths"},
   {id:"t033",room:"office",name:"Deep clean litter area",freq:"monthly",day:"thursday",assign:"Both",note:"Replace litter, wipe area",monthWeek:2},
-
-  // ── DOWNSTAIRS BATHROOM (Thursday — office & downstairs focus) ──
   {id:"t040",room:"downstairs-bath",name:"Wipe mirrors",freq:"weekly",day:"thursday",assign:"Both",note:""},
   {id:"t041",room:"downstairs-bath",name:"Clean counters & sink",freq:"weekly",day:"thursday",assign:"Both",note:"Microfiber + cleaner"},
   {id:"t042",room:"downstairs-bath",name:"Deep clean toilet (inside & out)",freq:"weekly",day:"thursday",assign:"Both",note:""},
   {id:"t043",room:"downstairs-bath",name:"Wipe down shower/tub",freq:"weekly",day:"thursday",assign:"Both",note:"Quick wipe — less use"},
   {id:"t044",room:"downstairs-bath",name:"Vacuum",freq:"weekly",day:"thursday",assign:"Both",note:"Bathroom floor"},
-
-  // ── STUDIO / DOG ZONE (Saturday — outdoor & studio day) ──
   {id:"t050",room:"studio",name:"Vacuum",freq:"weekly",day:"saturday",assign:"Both",note:"Dog hair buildup"},
   {id:"t051",room:"studio",name:"Mop floors",freq:"weekly",day:"saturday",assign:"Both",note:"Dr. Bronner's + hot water"},
   {id:"t052",room:"studio",name:"Laundromat deep clean",freq:"monthly",day:"saturday",assign:"Both",note:"Dog beds, rugs, studio textiles",monthWeek:1},
-
-  // ── KITCHEN (daily + eod + Friday mop + monthly deep cleans spread out) ──
   {id:"t060",room:"kitchen",name:"Wipe counters & stove top",freq:"daily",day:"all",assign:"Both",note:"After cooking"},
   {id:"t061",room:"kitchen",name:"Vacuum",freq:"eod",day:"all",assign:"Both",note:"Hardwood floors"},
   {id:"t062",room:"kitchen",name:"Mop floors",freq:"weekly",day:"friday",assign:"Both",note:"Dr. Bronner's + hot water + mop"},
@@ -263,38 +247,24 @@ const SEED_TASKS=[
   {id:"t064",room:"kitchen",name:"Deep clean stove top & oven",freq:"monthly",day:"friday",assign:"Both",note:"Degrease and scrub",monthWeek:2},
   {id:"t065",room:"kitchen",name:"Clean out fridge",freq:"monthly",day:"friday",assign:"Both",note:"Toss expired, wipe shelves",monthWeek:3},
   {id:"t066",room:"kitchen",name:"Organize pantry",freq:"monthly",day:"friday",assign:"Both",note:"Check dates, reorganize",monthWeek:4},
-
-  // ── LIVING ROOM (Tuesday — dusting focus + eod vacuum) ──
   {id:"t070",room:"living",name:"Vacuum",freq:"eod",day:"all",assign:"Both",note:"Hardwood floors"},
   {id:"t071",room:"living",name:"Dust surfaces & shelves",freq:"weekly",day:"tuesday",assign:"Both",note:"Swiffer + microfiber"},
   {id:"t072",room:"living",name:"Mop floors",freq:"weekly",day:"friday",assign:"Both",note:"Dr. Bronner's + hot water"},
   {id:"t073",room:"living",name:"Vacuum couch & cushions",freq:"biweekly",day:"tuesday",assign:"Both",note:""},
-
-  // ── LAUNDRY (Thursday — laundry day + monthly deep cleans spread) ──
   {id:"t080",room:"laundry",name:"Wash towels",freq:"weekly",day:"thursday",assign:"Both",note:"Hot water cycle"},
   {id:"t081",room:"laundry",name:"Wash dog blankets",freq:"weekly",day:"thursday",assign:"Both",note:"Regular wash — separate from studio"},
   {id:"t082",room:"laundry",name:"Deep clean washing machine",freq:"monthly",day:"tuesday",assign:"Both",note:"Empty hot cycle + vinegar",monthWeek:1},
   {id:"t083",room:"laundry",name:"Deep clean dryer (lint + vent)",freq:"monthly",day:"tuesday",assign:"Both",note:"Check vent for buildup",monthWeek:3},
   {id:"t084",room:"laundry",name:"Deep clean dishwasher",freq:"monthly",day:"wednesday",assign:"Both",note:"Vinegar + baking soda cycle",monthWeek:2},
-
-  // ── HALLWAYS & STAIRS (Tuesday — dusting + eod vacuum) ──
   {id:"t090",room:"hallways",name:"Vacuum",freq:"eod",day:"all",assign:"Both",note:"Stairs & upstairs carpet"},
   {id:"t091",room:"hallways",name:"Swiffer dust hallway surfaces",freq:"weekly",day:"tuesday",assign:"Both",note:"Swiffer duster"},
-
-  // ── GARAGE / ENTRYWAY (Saturday) ──
   {id:"t100",room:"garage",name:"Sweep entryway",freq:"weekly",day:"saturday",assign:"Both",note:""},
   {id:"t101",room:"garage",name:"Quarterly deep clean & organize",freq:"quarterly",day:"saturday",assign:"Both",note:"Full reorganization + sweep"},
-
-  // ── YARD & PATIO (Saturday — outdoor day) ──
   {id:"t110",room:"yard",name:"Pick up dog poop",freq:"weekly",day:"saturday",assign:"Both",note:"Before Monday trash"},
   {id:"t111",room:"yard",name:"Leaf blow side patio",freq:"biweekly",day:"saturday",assign:"Both",note:""},
   {id:"t112",room:"yard",name:"Rake rocks (side yard)",freq:"monthly",day:"saturday",assign:"Both",note:"",monthWeek:2},
-
-  // ── VEHICLES (Saturday) ──
   {id:"t120",room:"jeep",name:"Full detail — Jeep",freq:"monthly",day:"saturday",assign:"Both",note:"Wash, vacuum, wipe interior",monthWeek:1},
   {id:"t121",room:"4runner",name:"Full detail — 4Runner",freq:"monthly",day:"saturday",assign:"Both",note:"Wash, vacuum, wipe interior",monthWeek:3},
-
-  // ── HOUSEHOLD (Monday — trash day) ──
   {id:"t130",room:"household",name:"Take out trash & compost",freq:"weekly",day:"monday",assign:"Both",note:"Every Monday — curbside"},
   {id:"t131",room:"household",name:"Take out recycling",freq:"biweekly",day:"monday",assign:"Both",note:"Every other Monday"},
 ];
@@ -323,36 +293,38 @@ function getTasksForDate(ds){return allTasks.filter(t=>isTaskDueOnDate(t,ds))}
 function isTaskDone(id,ds){return!!completions[ds]?.[id]}
 function toast(m){toastMsg=m;render();clearTimeout(toastTimer);toastTimer=setTimeout(()=>{toastMsg=null;render()},2500)}
 
-const SEED_VERSION = 3; // Increment to re-seed tasks
+const SEED_VERSION = 3;
 
 function initFirebase(){
-  // Check if we need to re-seed
   db.ref("cleaning/seedVersion").once("value", snap => {
     const v = snap.val();
     if (!v || v < SEED_VERSION) {
-      // Re-seed tasks with updated names
       const obj = {};
       SEED_TASKS.forEach(t => { obj[t.id] = t; });
       db.ref("cleaning/tasks").set(obj);
       db.ref("cleaning/seedVersion").set(SEED_VERSION);
     }
   });
-
   db.ref("cleaning/tasks").on("value",snap=>{const v=snap.val();if(v){allTasks=Object.values(v)}synced=true;render()});
   db.ref("cleaning/completions").on("value",snap=>{completions=snap.val()||{};render()});
 }
-function toggleTask(id,ds){const p=`cleaning/completions/${ds}/${id}`;if(isTaskDone(id,ds))db.ref(p).remove();else db.ref(p).set(true)}
+
+// ── FIXED: renamed to fbToggleTask to avoid self-referencing loop with window.toggleTask ──
+function fbToggleTask(id, ds) {
+  const p = `cleaning/completions/${ds}/${id}`;
+  if (isTaskDone(id, ds)) db.ref(p).remove();
+  else db.ref(p).set(true);
+}
+
 function addTask(t){const id="t_"+Date.now();db.ref(`cleaning/tasks/${id}`).set({...t,id});toast("Task added!")}
 function updateTask(id,changes){db.ref(`cleaning/tasks/${id}`).update(changes);toast("Task updated!")}
 function deleteTask(id){db.ref(`cleaning/tasks/${id}`).remove();toast("Task removed")}
 
 let editingTaskId = null;
 
-// Group tasks by name for collapsed view
 function groupTasks(tasks,ds){
   const groups={};
   tasks.forEach(t=>{
-    // Group by name + frequency so same-name tasks at different frequencies stay separate
     const key=t.name.toLowerCase().replace(/[^a-z0-9]/g,"")+"|"+t.freq;
     if(!groups[key])groups[key]={name:t.name,tasks:[],freq:t.freq,assign:t.assign,note:t.note};
     groups[key].tasks.push(t);
@@ -438,7 +410,8 @@ function renderDay(tasks,done,pct,dayName){
 
     if(isSingle){
       const t=g.tasks[0],isDone=isTaskDone(t.id,selectedDate),r=ROOM_MAP[t.room]||{};
-      return`<div class="task-group"><div class="task-group-header" onclick="toggleTask('${t.id}','${selectedDate}')">
+      // Single task: clicking anywhere on the row toggles it
+      return`<div class="task-group"><div class="task-group-header" onclick="window.toggleTask('${t.id}','${selectedDate}')">
         <div class="task-group-check${isDone?" done":""}">${isDone?"✓":""}</div>
         <div class="task-group-body"><div class="task-group-name">${esc(t.name)}</div>
         <div class="task-group-rooms"><span>${r.emoji||""} ${r.label||""}</span></div>
@@ -447,6 +420,7 @@ function renderDay(tasks,done,pct,dayName){
       </div></div>`;
     }
 
+    // Multi-room group: header expands, sub-items toggle individually
     return`<div class="task-group">
       <div class="task-group-header" onclick="toggleGroup('${gKey}')">
         <div class="task-group-check ${checkClass}">${g.allDone?"✓":g.someDone?"–":""}</div>
@@ -457,7 +431,7 @@ function renderDay(tasks,done,pct,dayName){
       </div>
       <div class="task-sub-list${isExpanded?" open":""}">
         ${g.tasks.map(t=>{const isDone=isTaskDone(t.id,selectedDate),r=ROOM_MAP[t.room]||{};
-          return`<div class="task-sub${isDone?" done":""}" onclick="event.stopPropagation();toggleTask('${t.id}','${selectedDate}')">
+          return`<div class="task-sub${isDone?" done":""}" onclick="event.stopPropagation();window.toggleTask('${t.id}','${selectedDate}')">
             <div class="task-sub-check${isDone?" done":""}">${isDone?"✓":""}</div>
             <span class="task-sub-room">${r.emoji} ${r.label}</span>
             ${t.note?`<span class="task-sub-note">— ${esc(t.note)}</span>`:""}
@@ -569,10 +543,13 @@ function renderAddForm(){
   </div>`;
 }
 
-// Event handlers
+// ── Global handlers ──
 window.setView=v=>{currentView=v;render()};
 window.selectDate=ds=>{selectedDate=ds;currentView="day";render()};
-window.toggleTask=(id,ds)=>{toggleTask(id,ds)};
+
+// FIXED: window.toggleTask calls fbToggleTask (not itself)
+window.toggleTask=(id,ds)=>{ fbToggleTask(id,ds); };
+
 window.deleteTask=deleteTask;
 window.toggleGroup=key=>{expandedGroups[key]=!expandedGroups[key];render()};
 window.startEdit=id=>{editingTaskId=id;render()};
@@ -588,12 +565,10 @@ window.saveEdit=id=>{
   render();
 };
 
-// Calendar nav for week view
 window.wkPrev=()=>{const d=new Date(selectedDate+"T12:00:00");d.setDate(d.getDate()-7);selectedDate=d.toLocaleDateString("en-CA");render()};
 window.wkNext=()=>{const d=new Date(selectedDate+"T12:00:00");d.setDate(d.getDate()+7);selectedDate=d.toLocaleDateString("en-CA");render()};
 window.wkToday=()=>{selectedDate=todayStr();render()};
 
-// Calendar nav for month view
 window.moPrev=()=>{if(viewMonth===0){viewMonth=11;viewYear--}else viewMonth--;render()};
 window.moNext=()=>{if(viewMonth===11){viewMonth=0;viewYear++}else viewMonth++;render()};
 window.moToday=()=>{viewMonth=new Date().getMonth();viewYear=new Date().getFullYear();selectedDate=todayStr();render()};
